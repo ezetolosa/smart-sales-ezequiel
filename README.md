@@ -8,163 +8,180 @@
   - **Environment Management**: Every project in isolation
   - **Code Quality**: Automated checks for fewer bugs
   - **Documentation**: Use modern project documentation tools
-  - **Testing**: Prove your code works
-  - **Version Control**: Collaborate professionally
+  # Pro Analytics 02 — Python Starter Repository
 
----
+  Use this repository to start a professional Python project.
 
-## WORKFLOW 1. Set Up Your Machine
+  - Additional information: <https://github.com/denisecase/pro-analytics-02>
+  - Project organization: [`STRUCTURE.md`](./STRUCTURE.md)
 
-Proper setup is critical.
-Complete each step in the following guide and verify carefully.
+  ## Goals
 
-- [SET UP MACHINE](./SET_UP_MACHINE.md)
+  - **Environment management:** Keep each project isolated.
+  - **Code quality:** Use automated checks to reduce bugs.
+  - **Documentation:** Build and serve docs with `mkdocs`.
+  - **Testing:** Write and run tests with `pytest`.
+  - **Version control:** Collaborate using Git and GitHub.
 
----
+  ---
 
-## WORKFLOW 2. Set Up Your Project
+  ## Workflow 1 — Set Up Your Machine
 
-After verifying your machine is set up, set up a new Python project by copying this template.
-Complete each step in the following guide.
+  Complete the steps in [`SET_UP_MACHINE.md`](./SET_UP_MACHINE.md) and verify your environment before continuing.
 
-- [SET UP PROJECT](./SET_UP_PROJECT.md)
+  ---
 
-It includes the critical commands to set up your local environment (and activate it):
+  ## Workflow 2 — Set Up Your Project
 
-```shell
-uv python pin 3.12
-uv venv
-uv sync --extra dev --extra docs --upgrade
-uv run pre-commit install
-uv run python --version
-```
+  After your machine is configured, follow [`SET_UP_PROJECT.md`](./SET_UP_PROJECT.md) to create and configure this project.
 
-**Windows (PowerShell):**
+  Typical commands to initialize the project environment (replace with your preferred toolchain):
 
-```shell
-.\.venv\Scripts\activate
-```
+  ```bash
+  uv python pin 3.12
+  uv venv
+  uv sync --extra dev --extra docs --upgrade
+  uv run pre-commit install
+  uv run python --version
+  ```
 
-**macOS / Linux / WSL:**
+  Windows (PowerShell):
 
-```shell
-source .venv/bin/activate
-```
+  ```powershell
+  .\.venv\Scripts\Activate.ps1
+  ```
 
----
+  macOS / Linux / WSL:
 
-## WORKFLOW 3. Daily Workflow
+  ```bash
+  source .venv/bin/activate
+  ```
 
-Please ensure that the prior steps have been verified before continuing.
-When working on a project, we open just that project in VS Code.
+  ---
 
-### 3.1 Git Pull from GitHub
+  ## Workflow 3 — Daily Workflow
 
-Always start with `git pull` to check for any changes made to the GitHub repo.
+  Before starting work each day:
 
-```shell
-git pull
-```
+  ### 3.1 Pull latest changes
 
-### 3.2 Run Checks as You Work
+  ```bash
+  git pull
+  ```
 
-This mirrors real work where we typically:
+  ### 3.2 Run checks while you work
 
-1. Update dependencies (for security and compatibility).
-2. Clean unused cached packages to free space.
-3. Use `git add .` to stage all changes.
-4. Run ruff and fix minor issues.
-5. Update pre-commit periodically.
-6. Run pre-commit quality checks on all code files (**twice if needed**, the first pass may fix things).
-7. Run tests.
+  A typical sequence for maintaining the project:
 
-In VS Code, open your repository, then open a terminal (Terminal / New Terminal) and run the following commands one at a time to check the code.
+  ```bash
+  uv sync --extra dev --extra docs --upgrade
+  uv cache clean
+  git add .
+  uvx ruff check --fix
+  uvx pre-commit autoupdate
+  uv run pre-commit run --all-files
+  git add .
+  uv run pytest
+  ```
 
-```shell
-uv sync --extra dev --extra docs --upgrade
-uv cache clean
-git add .
-uvx ruff check --fix
-uvx pre-commit autoupdate
-uv run pre-commit run --all-files
-git add .
-uv run pytest
-```
+  Note: the second `git add .` ensures that any automatic fixes from linters or pre-commit hooks are staged before committing.
 
-NOTE: The second `git add .` ensures any automatic fixes made by Ruff or pre-commit are included before testing or committing.
+  <details>
+  <summary>Best practices note</summary>
 
-<details>
-<summary>Click to see a note on best practices</summary>
+  `uvx` runs the latest version of a tool in an isolated cache, outside the virtual environment. For fully reproducible results, or to run a tool inside the project's `.venv`, use `uv run`.
 
-`uvx` runs the latest version of a tool in an isolated cache, outside the virtual environment.
-This keeps the project light and simple, but behavior can change when the tool updates.
-For fully reproducible results, or when you need to use the local `.venv`, use `uv run` instead.
+  </details>
 
-</details>
+  ### 3.3 Build project documentation
 
-### 3.3 Build Project Documentation
+  ```bash
+  uv run mkdocs build --strict
+  uv run mkdocs serve
+  ```
 
-Make sure you have current doc dependencies, then build your docs, fix any errors, and serve them locally to test.
+  Open the provided local URL in your browser (Ctrl+Click on the link in the terminal). Press `Ctrl+C` to stop serving.
 
-```shell
-uv run mkdocs build --strict
-uv run mkdocs serve
-```
+  ### 3.4 Execute demo modules
 
-- After running the serve command, the local URL of the docs will be provided. To open the site, press **CTRL and click** the provided link (at the same time) to view the documentation. On a Mac, use **CMD and click**.
-- Press **CTRL c** (at the same time) to stop the hosting process.
+  Run demo modules to verify functionality:
 
-### 3.4 Execute
+  ```bash
+  uv run python -m analytics_project.demo_module_basics
+  uv run python -m analytics_project.demo_module_languages
+  uv run python -m analytics_project.demo_module_stats
+  uv run python -m analytics_project.demo_module_viz
+  ```
 
-This project includes demo code.
-Run the demo Python modules to confirm everything is working.
+  Expected results:
 
-In VS Code terminal, run:
+  - Log messages in the terminal
+  - Greetings in several languages
+  - Simple statistics output
+  - A chart window (close to continue)
 
-```shell
-uv run python -m analytics_project.demo_module_basics
-uv run python -m analytics_project.demo_module_languages
-uv run python -m analytics_project.demo_module_stats
-uv run python -m analytics_project.demo_module_viz
-```
+  If something fails, confirm you are in the project root and that dependencies are installed (`uv sync ...`).
 
-You should see:
+  ### 3.5 Commit and push changes
 
-- Log messages in the terminal
-- Greetings in several languages
-- Simple statistics
-- A chart window open (close the chart window to continue).
+  ```bash
+  git add .
+  git commit -m "Describe your change"
+  git push -u origin main
+  ```
 
-If this works, your project is ready! If not, check:
+  This triggers CI checks and may publish documentation via GitHub Pages.
 
-- Are you in the right folder? (All terminal commands are to be run from the root project folder.)
-- Did you run the full `uv sync --extra dev --extra docs --upgrade` command?
-- Are there any error messages? (ask for help with the exact error)
+  ---
 
----
+  # Smart Sales — Module 2: Data Preparation
 
-### 3.5 Git add-commit-push to GitHub
+  This module adds a first step of the data pipeline: reading raw CSV files into pandas DataFrames and verifying paths and logging behavior.
 
-Anytime we make working changes to code is a good time to git add-commit-push to GitHub.
+  ## What I did
 
-1. Stage your changes with git add.
-2. Commit your changes with a useful message in quotes.
-3. Push your work to GitHub.
+  - Created `src/analytics_project/data_prep.py`.
+  - Added a reusable `read_and_log()` function to load CSVs with friendly logging.
+  - Set up path constants using `project_root` from `utils_logger.py`.
+  - Logged each file load and DataFrame shape.
+  - Executed the module with `uv` and verified `project.log` is written.
 
-```shell
-git add .
-git commit -m "describe your change in quotes"
-git push -u origin main
-```
+  ## Raw files loaded
 
-This will trigger the GitHub Actions workflow and publish your documentation via GitHub Pages.
+  Located in `data/raw/`:
 
-### 3.6 Modify and Debug
+  - `customers_data.csv` — 201 rows × 4 columns
+  - `products_data.csv` — 100 rows × 4 columns
+  - `sales_data.csv` — 2001 rows × 7 columns
 
-With a working version safe in GitHub, start making changes to the code.
+  ## How to run
 
-Before starting a new session, remember to do a `git pull` and keep your tools updated.
+  Run the data preparation module:
 
-Each time forward progress is made, remember to git add-commit-push.
+  ```bash
+  uv run python -m analytics_project.data_prep
+  ```
 
+  This prints:
 
+  - “Starting data preparation…”
+  - Messages about reading each file
+  - DataFrame shapes
+  - “Data preparation complete.”
+
+  A detailed log is written to `project.log`.
+
+  ## Git commands used
+
+  ```bash
+  git add .
+  git commit -m "Implement data_prep and update project log"
+  git push
+  ```
+
+  ## Result
+
+  - Loads all raw data automatically
+  - Logs all steps clearly
+  - Runs with `uv` and the configured environment
+  - Changes are committed and pushed to GitHub
