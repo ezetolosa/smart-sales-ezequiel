@@ -278,3 +278,129 @@ git push
 - Prep scripts fully operational
 - Ready for ETL loading in the next module
 
+
+
+# Smart Sales — Module 4: Data Warehouse (P4)
+
+In this part of the project, I designed and implemented a small data warehouse using a classic star-schema
+structure. The goal was to take the cleaned data from P3 and load it into a dimensional model that supports
+fast analytical queries.
+
+---
+
+## ⭐ Design Choices
+
+I followed a **star schema** with:
+
+- **dim_customer**
+- **dim_product**
+- **fact_sales**
+
+This layout keeps the model simple, consistent, and optimized for analysis.
+The fact table stores grain-level transactions, while customer and product attributes live in their own
+dimension tables.
+
+### Why this schema
+- Easy to query for analytics (e.g., totals by region, totals by product category)
+- Natural match for the structure of the prepared CSVs
+- Clean separation between facts and descriptive attributes
+- Works well with SQLite and the course requirements
+
+---
+
+## 🏗 Schema Implementation
+
+The ETL script located at:
+src/analytics_project/dw/etl_to_dw.py
+
+
+performs these steps:
+
+1. Creates the warehouse directory and regenerates the database each run.
+2. Builds the schema with the correct primary and foreign keys.
+3. Reads the prepared CSV files from `data/prepared/`.
+4. Normalizes and renames columns to match the DW schema.
+5. Removes duplicate `customer_id` rows to avoid PK violations.
+6. Loads all three tables using `pandas.to_sql()`.
+
+### DW Schema (SQL)
+
+CREATE TABLE IF NOT EXISTS dim_customer (
+customer_id INTEGER PRIMARY KEY,
+name TEXT,
+region TEXT,
+join_date TEXT
+);
+
+CREATE TABLE IF NOT EXISTS dim_product (
+product_id INTEGER PRIMARY KEY,
+product_name TEXT,
+category TEXT,
+unit_price REAL
+);
+
+CREATE TABLE IF NOT EXISTS fact_sales (
+sale_id INTEGER PRIMARY KEY,
+customer_id INTEGER,
+product_id INTEGER,
+sale_amount REAL,
+sale_date TEXT,
+FOREIGN KEY (customer_id) REFERENCES dim_customer(customer_id),
+FOREIGN KEY (product_id) REFERENCES dim_product(product_id)
+);
+
+
+
+---
+
+## 📦 Result: Populated Data Warehouse
+
+After running the ETL, the SQLite database (`data/warehouse/smart_sales_dw.db`) was populated successfully.
+
+### dim_customer
+*(Screenshot included in repo)*
+
+### dim_product
+*(Screenshot included in repo)*
+
+### fact_sales
+*(Screenshot included in repo)*
+
+---
+
+## 🧠 Challenges & Notes
+
+- **Duplicate primary keys:**
+  Two `customer_id` values were duplicated in the prepared CSV.
+  I added logic to detect and drop duplicates automatically and log a warning.
+
+- **Inconsistent column naming:**
+  Some columns were lowercase/uppercase mixes.
+  I cleaned all columns using `.str.strip().str.lower()` before renaming.
+
+- **Schema alignment:**
+  Ensuring the fact table referenced dimension tables correctly required precise
+  renaming and column subset selection.
+
+Overall, this module felt very close to what real ETL + DW work looks like — designing,
+cleaning, integrating, and validating the pipeline end-to-end.
+
+---
+
+## 🧪 How to Run
+
+From the project root:
+uv run python -m analytics_project.dw.etl_to_dw
+
+
+The script rebuilds the DW and loads all data automatically.
+
+---
+
+## ✔ Git Commit History
+git add .
+git commit -m "Add data warehouse (P4) + ETL script + populated DW screenshots"
+git push
+
+The full DW is now versioned in GitHub.
+
