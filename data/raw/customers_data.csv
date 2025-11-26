@@ -5,17 +5,17 @@ CustomerID,Name,Region,JoinDate,LoyaltyPoints_num,CustomerSegment_cat
 1003,David Brennan,North,5/21/2020,27,Bronze
 1004,Kerry Collins,North,9/12/2023,636,Silver
 1005,Jessica Mora,South,8/5/2021,1293,Gold
-1006,Hannah Ray,West,7/3/2021,1311,Platinum
+1006,Hannah Ray,West,7/3/2021,1311,unknown
 1007,David Kim,West,5/20/2020,1542,Platinum
 1008,William Ramirez,EAST,9/15/2023,51,Bronze
 1009,Zachary Bell Jr.,East,4/20/2023,1827,Platinum
 1010,Mike Davis,East,3/23/2022,1622,Platinum
 1011,Amanda Myers,West,9/5/2021,86,Bronze
 1012,Tara Miller,North,8/10/2020,1469,Platinum
-1013,Alyssa Morgan,North,7/22/2022,859,Gold
+1013,Alyssa Morgan,North,7/22/2022,859,??
 1014,Cindy Woods,East,4/2/2024,1200,Gold
 1015,Jennifer Rodgers,North,2/12/2023,1561,Platinum
-1016,Andrea Roberts,EAST,5/16/2021,1142,Gold
+1016,Andrea Roberts,EAST,5/16/2021,-10,Gold
 1017,Brittney Burnett,North,7/3/2020,699,Silver
 1018,Edwin Garrison,south-west,8/31/2020,195,Bronze
 1019,Michelle Torres,Central,11/18/2020,1193,Gold
@@ -24,10 +24,10 @@ CustomerID,Name,Region,JoinDate,LoyaltyPoints_num,CustomerSegment_cat
 1022,Austin Gutierrez,EAST,11/25/2021,562,Silver
 1023,Dustin Medina,east,6/14/2021,1336,Platinum
 1024,Andres Avila,Central,9/19/2022,1983,Platinum
-1025,Garrett Lewis,South,8/4/2023,366,Silver
+1025,Garrett Lewis,South,8/4/2023,999999,Silver
 1026,Gary Walls,North,10/5/2023,485,Silver
 1027,Anthony Schroeder,east,10/4/2020,1144,Gold
-1028,Haley Wagner,West,11/3/2023,819,Gold
+1028,Haley Wagner,West,11/3/2023,,Gold
 1029,Gina Powers,West,10/26/2022,1186,Gold
 1030,Alice Robinson,EAST,8/6/2021,111,Bronze
 1031,Jessica Frazier,West,10/20/2021,1534,Platinum
@@ -36,9 +36,9 @@ CustomerID,Name,Region,JoinDate,LoyaltyPoints_num,CustomerSegment_cat
 1034,Heather Smith,Central,9/16/2022,1042,Gold
 1035,Lorraine Rodriguez,East,9/26/2022,1286,Gold
 1036,Robert Bishop,south-west,9/14/2020,1632,Platinum
-1037,Lisa Sanders,West,6/3/2020,593,Silver
+1037,Lisa Sanders,West,6/3/2020,593,??
 1038,Jason Ford,EAST,10/9/2023,1880,Platinum
-1039,Brandy Good,West,5/21/2023,1589,Platinum
+1039,Brandy Good,West,5/21/2023,,Platinum
 1040,Angel Lee,Central,4/8/2022,219,Silver
 1041,David Beltran,east,1/18/2021,1501,Platinum
 1042,Christopher Dodson,North,10/30/2023,1186,Gold
