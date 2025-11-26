@@ -1,6 +1,4 @@
 CustomerID,Name,Region,JoinDate,LoyaltyPoints_num,CustomerSegment_cat
-1000,Robert Gomez,West,2/25/2024,891.0,Gold
-1001,John Silva,East,12/1/2020,1145.0,Gold
 1002,Mark Marshall,Central,8/8/2020,1669.0,Platinum
 1003,David Brennan,North,5/21/2020,27.0,Bronze
 1004,Kerry Collins,North,9/12/2023,636.0,Silver
@@ -24,8 +22,10 @@ CustomerID,Name,Region,JoinDate,LoyaltyPoints_num,CustomerSegment_cat
 1022,Austin Gutierrez,EAST,11/25/2021,562.0,Silver
 1023,Dustin Medina,east,6/14/2021,1336.0,Platinum
 1024,Andres Avila,Central,9/19/2022,1983.0,Platinum
+1025,Garrett Lewis,South,8/4/2023,999999.0,Silver
 1026,Gary Walls,North,10/5/2023,485.0,Silver
 1027,Anthony Schroeder,east,10/4/2020,1144.0,Gold
+1028,Haley Wagner,West,11/3/2023,Unknown,Gold
 1029,Gina Powers,West,10/26/2022,1186.0,Gold
 1030,Alice Robinson,EAST,8/6/2021,111.0,Bronze
 1031,Jessica Frazier,West,10/20/2021,1534.0,Platinum
@@ -36,6 +36,7 @@ CustomerID,Name,Region,JoinDate,LoyaltyPoints_num,CustomerSegment_cat
 1036,Robert Bishop,south-west,9/14/2020,1632.0,Platinum
 1037,Lisa Sanders,West,6/3/2020,593.0,??
 1038,Jason Ford,EAST,10/9/2023,1880.0,Platinum
+1039,Brandy Good,West,5/21/2023,Unknown,Platinum
 1040,Angel Lee,Central,4/8/2022,219.0,Silver
 1041,David Beltran,east,1/18/2021,1501.0,Platinum
 1042,Christopher Dodson,North,10/30/2023,1186.0,Gold
@@ -194,6 +195,4 @@ CustomerID,Name,Region,JoinDate,LoyaltyPoints_num,CustomerSegment_cat
 1195,Michael Lee,south-west,8/22/2023,1939.0,Platinum
 1196,Dr. Elizabeth Johnston DDS,North,2/9/2022,1145.0,Gold
 1197,William Wilson,West,4/4/2023,924.0,Gold
-1198,Chris Allen,south-west,10/11/2022,972.0,Gold
-1199,James Cooley,West,7/23/2020,1718.0,Platinum
 1005,Jessica Mora,South,8/5/2021,524.0,Silver
