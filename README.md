@@ -185,3 +185,96 @@
   - Logs all steps clearly
   - Runs with `uv` and the configured environment
   - Changes are committed and pushed to GitHub
+
+
+# Smart Sales — Module 3: Data Cleaning & Reusable ETL Prep
+
+This module extends the pipeline by cleaning and preparing all three raw datasets so they are ready for ETL into a central data store.
+
+## What I added in this module
+
+### Reusable `DataScrubber` class
+I implemented a reusable cleaning utility located at:
+src/analytics_project/data_scrubber.py
+
+
+This class centralizes the core cleaning logic:
+
+- Removing duplicate rows
+- Handling missing values (drop or fill)
+- Filtering numeric outliers using bounds
+- Formatting string columns (lower/upper + trim)
+- Renaming and reordering columns
+- Parsing dates using:
+
+pd.to_datetime(..., errors="coerce", infer_datetime_format=True)
+
+
+- Inspecting the DataFrame before/after cleaning
+
+### Dedicated prep scripts for each dataset
+Inside:
+src/analytics_project/data_prep/
+
+
+I created three separate scripts:
+
+- prepare_customers_data.py
+- prepare_products_data.py
+- prepare_sales_data.py
+
+Each script:
+
+1. Loads raw CSV files
+2. Applies cleaning steps + DataScrubber methods
+3. Saves the cleaned output into:
+data/prepared/
+
+
+### Validating the cleaning logic
+I added a unittest file:
+src/analytics_project/test_data_scrubber.py
+
+
+Executed with:
+uv run python src/analytics_project/test_data_scrubber.py
+
+
+Output:
+Ran 7 tests in 0.03s
+OK
+
+
+### Prepared output files
+Cleaned datasets saved in:
+data/prepared/
+
+
+
+Final shapes:
+
+- customers_data_prepared.csv — 197 rows
+- products_data_prepared.csv — 96 rows
+- sales_data_prepared.csv — 1906 rows (with StandardDateTime column)
+
+## How to run the cleaning scripts
+uv run python src/analytics_project/data_prep/prepare_customers_data.py
+uv run python src/analytics_project/data_prep/prepare_products_data.py
+uv run python src/analytics_project/data_prep/prepare_sales_data.py
+
+
+
+## Git commands used in Module 3
+git add .
+git commit -m "Finished P3: DataScrubber updated, prep scripts working, cleaned customers/products/sales"
+git push
+
+
+
+## Result
+
+- All datasets cleaned and standardized
+- Centralized reusable cleaning logic
+- Prep scripts fully operational
+- Ready for ETL loading in the next module
+
