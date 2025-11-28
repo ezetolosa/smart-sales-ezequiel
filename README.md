@@ -187,97 +187,6 @@
   - Changes are committed and pushed to GitHub
 
 
-# Smart Sales — Module 3: Data Cleaning & Reusable ETL Prep
-
-This module extends the pipeline by cleaning and preparing all three raw datasets so they are ready for ETL into a central data store.
-
-## What I added in this module
-
-### Reusable `DataScrubber` class
-I implemented a reusable cleaning utility located at:
-src/analytics_project/data_scrubber.py
-
-
-This class centralizes the core cleaning logic:
-
-- Removing duplicate rows
-- Handling missing values (drop or fill)
-- Filtering numeric outliers using bounds
-- Formatting string columns (lower/upper + trim)
-- Renaming and reordering columns
-- Parsing dates using:
-
-pd.to_datetime(..., errors="coerce", infer_datetime_format=True)
-
-
-- Inspecting the DataFrame before/after cleaning
-
-### Dedicated prep scripts for each dataset
-Inside:
-src/analytics_project/data_prep/
-
-
-I created three separate scripts:
-
-- prepare_customers_data.py
-- prepare_products_data.py
-- prepare_sales_data.py
-
-Each script:
-
-1. Loads raw CSV files
-2. Applies cleaning steps + DataScrubber methods
-3. Saves the cleaned output into:
-data/prepared/
-
-
-### Validating the cleaning logic
-I added a unittest file:
-src/analytics_project/test_data_scrubber.py
-
-
-Executed with:
-uv run python src/analytics_project/test_data_scrubber.py
-
-
-Output:
-Ran 7 tests in 0.03s
-OK
-
-
-### Prepared output files
-Cleaned datasets saved in:
-data/prepared/
-
-
-
-Final shapes:
-
-- customers_data_prepared.csv — 197 rows
-- products_data_prepared.csv — 96 rows
-- sales_data_prepared.csv — 1906 rows (with StandardDateTime column)
-
-## How to run the cleaning scripts
-uv run python src/analytics_project/data_prep/prepare_customers_data.py
-uv run python src/analytics_project/data_prep/prepare_products_data.py
-uv run python src/analytics_project/data_prep/prepare_sales_data.py
-
-
-
-## Git commands used in Module 3
-git add .
-git commit -m "Finished P3: DataScrubber updated, prep scripts working, cleaned customers/products/sales"
-git push
-
-
-
-## Result
-
-- All datasets cleaned and standardized
-- Centralized reusable cleaning logic
-- Prep scripts fully operational
-- Ready for ETL loading in the next module
-
 
 
 # Smart Sales — Module 4: Data Warehouse (P4)
@@ -310,9 +219,7 @@ dimension tables.
 
 ## 🏗 Schema Implementation
 
-The ETL script located at:
-src/analytics_project/dw/etl_to_dw.py
-
+The ETL script located at:src/analytics_project/dw/etl_to_dw.py
 
 performs these steps:
 
@@ -378,7 +285,7 @@ After running the ETL, the SQLite database (`data/warehouse/smart_sales_dw.db`) 
   Some columns were lowercase/uppercase mixes.
   I cleaned all columns using `.str.strip().str.lower()` before renaming.
 
-- **Schema alignment:**
+- Schema alignment:**
   Ensuring the fact table referenced dimension tables correctly required precise
   renaming and column subset selection.
 
@@ -390,17 +297,115 @@ cleaning, integrating, and validating the pipeline end-to-end.
 ## 🧪 How to Run
 
 From the project root:
-uv run python -m analytics_project.dw.etl_to_dw
 
+uv run python -m analytics_project.dw.etl_to_dw
 
 The script rebuilds the DW and loads all data automatically.
 
 ---
 
 ## ✔ Git Commit History
+
 git add .
 git commit -m "Add data warehouse (P4) + ETL script + populated DW screenshots"
 git push
 
 The full DW is now versioned in GitHub.
 
+
+
+Smart Sales — Module 5: Cross-Platform Reporting (P5)
+
+In this module, I connected my data warehouse to a BI tool and built interactive analytical views using Power BI Desktop (Windows) via an ODBC connection to smart_sales_dw.db.
+The goal was to apply core OLAP operations — slice, dice, and drilldown — and document the reporting process.
+
+🔌 Connecting Power BI to the Data Warehouse
+
+Installed Power BI Desktop and the SQLite ODBC driver
+
+Created a DSN named smart_sales_dw
+
+Loaded the three DW tables: dim_customer, dim_product, and fact_sales
+
+Verified relationships automatically matched the star schema
+
+Built a custom SQL query using Power Query’s Odbc.Query() to create a dedicated reporting table (Top Customers)
+
+Example Power Query code:
+
+let
+    Source = Odbc.Query("dsn=smart_sales_dw",
+        "SELECT c.name, SUM(s.sale_amount) AS total_spent
+        FROM fact_sales s
+        JOIN dim_customer c ON s.customer_id = c.customer_id
+        GROUP BY c.name
+        ORDER BY total_spent DESC;")
+in
+    Source
+
+
+The resulting table was loaded as Top Customers for use in visuals.
+
+🔍 OLAP Operations
+1. Slice (Filtering by Region)
+
+Since all sales in the dataset share the same date, slicing by date was not meaningful.
+Instead, I added a slicer using customer region, which provides real variation across the dataset.
+
+The slicer dynamically filters visuals on the report page.
+
+2. Dice (Two-Dimensional Breakdown)
+
+I created a Power BI Matrix visual with:
+
+Rows: product category
+
+Columns: customer region
+
+Values: Total Sales Amount (a measure created in Power BI)
+
+This reveals how different product categories perform across geographic regions.
+
+3. Drilldown (Year → Quarter → Month)
+
+I built a column chart using a date hierarchy:
+
+sale_date.Year
+
+sale_date.Quarter
+
+sale_date.Month
+
+Power BI allows interactive drilldown even though all records fall within May 2025.
+The visual still demonstrates the OLAP hierarchy and navigation between levels.
+
+📊 Visuals Created
+
+Region slicer + bar chart
+
+Product category × region matrix
+
+Drilldown column chart (Year → Quarter → Month)
+
+Top customers ranking table
+
+
+
+✔ Git Commands Used
+git add .
+git commit -m "Add reporting (P5) docs and Power BI summary"
+git push
+
+🧠 Result
+
+Successful ODBC connection from Power BI to SQL DW
+
+Clean implementation of slice, dice, and drilldown
+
+Custom SQL query integrated via Power Query
+
+All visuals working interactively
+
+Reporting layer completed and documented
+
+Repository updated with README and DW files (Power BI file not included)
