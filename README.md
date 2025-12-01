@@ -490,28 +490,29 @@ Examples of cleaning applied:
 
 ### Aggregation
 
-```text
+
 Total Revenue per Region = SUM(TotalRevenue)
 
 
 5. Results
-Revenue by Region
+Below are the outputs generated from the OLAP analysis:
 
-| Region         | Total Revenue |
-| -------------- | ------------: |
-| **EAST**       |    651,980.94 |
-| **NORTH**      |    356,799.36 |
-| **WEST**       |    301,278.71 |
-| **SOUTH**      |    205,205.23 |
-| **CENTRAL**    |    187,206.93 |
-| **SOUTH-WEST** |    178,608.17 |
+1. Cube Output (Year–Month–Region Aggregation)
 
-Summary output:
-data/results/sales_growth_by_region_summary.csv
+This is the cube generated from slicing, dicing, and drilldown.
 
-Final Visualization
-Stored at:
-data/results/sales_growth_by_region.png
+![Cube Output](data/olap_cubing_outputs/sales_growth_by_region_cube.csv)
+
+2. Goal Summary (Total Revenue by Region)
+
+This file contains the cleaned and aggregated revenue per region.
+
+![Goal Summary](data/results/sales_growth_by_region_summary.csv)
+
+3. Visualization (Bar Chart: Total Revenue by Region)
+
+![Revenue Chart](data/results/sales_growth_by_region.png)
+This chart shows the final insight in a clear, visual format.
 
 6. Suggested Business Actions
 
