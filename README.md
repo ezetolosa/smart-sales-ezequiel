@@ -409,3 +409,134 @@ All visuals working interactively
 Reporting layer completed and documented
 
 Repository updated with README and DW files (Power BI file not included)
+
+
+
+
+
+# 📊 P6 – BI Insights & Storytelling
+### Goal: Sales Growth by Region
+
+For this module, I focused on a clear business question:
+> **Which regions generate the most revenue, and how do they compare?**
+
+The idea is to help a business quickly understand where performance is strongest and where additional attention or investment might be needed.
+
+---
+
+## 1. Business Goal
+
+**Main Question:**
+Identify total revenue by region and understand performance differences across geographic areas.
+
+**Why it matters:**
+This insight helps guide decisions around marketing, expansion, inventory allocation, and regional growth strategies.
+
+---
+
+## 2. Data Source
+
+The analysis uses:
+
+- The **data warehouse** created in P5 (`smart_sales_dw.db`)
+- The **OLAP cube** generated in P6:
+
+`data/olap_cubing_outputs/sales_growth_by_region_cube.csv`
+
+Cube columns:
+- `Year`
+- `Month`
+- `region`
+- `TotalRevenue`
+- `TransactionCount`
+
+All cube data is derived from:
+- `dim_customer`
+- `dim_product`
+- `fact_sales`
+
+---
+
+## 3. Tools Used
+
+- **Python** (Pandas, Matplotlib)
+- **SQLite** as the warehouse engine
+- **OLAP-style analysis**: slicing, dicing, and drill-down
+- Custom scripts inside `src/analytics_project/olap/`
+
+---
+
+## 4. Workflow & OLAP Logic
+
+### Slicing
+Filtered only the necessary fields for regions and revenue.
+
+### Dicing
+Grouped by `Year`, `Month`, and `Region` to create a multi-dimensional view.
+
+### Drill-Down
+Normalized and consolidated region names to avoid duplicates caused by inconsistent formatting.
+
+### Region Normalization
+Examples of cleaning applied:
+
+| Original values       | Normalized |
+|-----------------------|-----------:|
+| `east`, `EAST`, `East`| EAST       |
+| `west`, `West`        | WEST       |
+| `south-west`          | SOUTH-WEST |
+| `north`               | NORTH      |
+| `central`             | CENTRAL    |
+
+### Aggregation
+
+```text
+Total Revenue per Region = SUM(TotalRevenue)
+
+
+5. Results
+Revenue by Region
+
+| Region         | Total Revenue |
+| -------------- | ------------: |
+| **EAST**       |    651,980.94 |
+| **NORTH**      |    356,799.36 |
+| **WEST**       |    301,278.71 |
+| **SOUTH**      |    205,205.23 |
+| **CENTRAL**    |    187,206.93 |
+| **SOUTH-WEST** |    178,608.17 |
+
+Summary output:
+data/results/sales_growth_by_region_summary.csv
+
+Final Visualization
+Stored at:
+data/results/sales_growth_by_region.png
+
+6. Suggested Business Actions
+
+Based on the results:
+
+Prioritize EAST — clearly the strongest-performing region.
+
+NORTH and WEST show solid potential; targeted marketing campaigns or inventory optimization could be valuable.
+
+SOUTH, CENTRAL, and SOUTH-WEST underperform relative to other regions; further investigation is recommended.
+
+Align strategic planning and forecasting based on each region’s revenue contribution.
+
+7. Challenges Encountered
+
+Region names were inconsistent (different capitalization and formats).
+→ Solved via normalization and grouping logic in the OLAP scripts.
+
+Some records had invalid dates or sale amounts.
+→ Cleaned during cubing and transformation with validation steps.
+
+The DW schema differed from the example repository.
+→ All scripts were adapted to work with dim_customer, dim_product, and fact_sales.
+
+✅ Final Notes
+
+This completes the full OLAP pipeline for Module 6:
+Data Warehouse → Cube → Goal Analysis → Summary → Visualization → Documentation
