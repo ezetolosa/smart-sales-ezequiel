@@ -494,7 +494,7 @@ Examples of cleaning applied:
 Total Revenue per Region = SUM(TotalRevenue)
 
 
-5. Results
+## 5. Results
 Below are the outputs generated from the OLAP analysis:
 
 1. Cube Output (Year–Month–Region Aggregation)
@@ -514,7 +514,7 @@ This file contains the cleaned and aggregated revenue per region.
 ![Revenue Chart](data/results/sales_growth_by_region.png)
 This chart shows the final insight in a clear, visual format.
 
-6. Suggested Business Actions
+## 6. Suggested Business Actions
 
 Based on the results:
 
@@ -526,7 +526,7 @@ SOUTH, CENTRAL, and SOUTH-WEST underperform relative to other regions; further i
 
 Align strategic planning and forecasting based on each region’s revenue contribution.
 
-7. Challenges Encountered
+## 7. Challenges Encountered
 
 Region names were inconsistent (different capitalization and formats).
 → Solved via normalization and grouping logic in the OLAP scripts.
@@ -537,7 +537,7 @@ Some records had invalid dates or sale amounts.
 The DW schema differed from the example repository.
 → All scripts were adapted to work with dim_customer, dim_product, and fact_sales.
 
-✅ Final Notes
+## ✅ Final Notes
 
 This completes the full OLAP pipeline for Module 6:
 Data Warehouse → Cube → Goal Analysis → Summary → Visualization → Documentation
