@@ -541,3 +541,110 @@ The DW schema differed from the example repository.
 
 This completes the full OLAP pipeline for Module 6:
 Data Warehouse → Cube → Goal Analysis → Summary → Visualization → Documentation
+
+
+
+
+# **📊P7:Custom BI Project – Smart Sales Dashboard**
+
+## **1. The Business Goal**
+
+The main goal of this project is to identify which regions, product categories, and individual products generate the highest revenue and contribute the most value to the business. Understanding these patterns helps guide better decisions in marketing, inventory planning, and strategic prioritization. This project focuses on providing a clear, data-driven overview of performance across regions and products.
+
+---
+
+## **2. Data Source**
+
+The project uses the data warehouse created earlier in the Smart-Sales project, stored in a SQLite database (`smart_sales_dw.db`).
+
+**Tables included:**
+
+* **fact_sales** – transaction-level data with sale amounts and keys
+* **dim_customer** – customer details such as region and join date
+* **dim_product** – product information including category and unit price
+
+These tables form a proper star schema and were imported into Power BI via an ODBC connection.
+
+---
+
+## **3. Tools Used**
+
+* **Power BI Desktop** for modeling, DAX calculations, and visualization
+* **DAX** for KPI creation
+* **SQLite (via ODBC driver)** as the data source
+* **GitHub** for documentation and project submission
+
+---
+
+## **4. Workflow & Logic**
+
+After importing the tables into Power BI and confirming the star-schema relationships, I created the main KPIs:
+
+* **Total Revenue**
+
+  ```DAX
+  Total Revenue = SUM(fact_sales[sale_amount])
+  ```
+
+* **Order Count**
+
+  ```DAX
+  Order Count = COUNT(fact_sales[sale_id])
+  ```
+
+* **Avg Revenue per Transaction**
+
+  ```DAX
+  Avg Revenue per Transaction = [Total Revenue] / [Order Count]
+  ```
+
+Using these measures, I built a dashboard with:
+
+* Revenue by region
+* Revenue by category
+* A heatmap combining region × category
+* A drilldown table showing product-level performance
+
+The dashboard layout was designed to separate KPIs, charts, and detailed results clearly and professionally.
+
+---
+
+## **5. Results (Narrative + Visualizations)**
+
+### **Key Insights**
+
+The **EAST** region is the strongest performer with the highest total revenue.
+Across product categories, **home** leads as the top category, slightly above office, electronics, and clothing.
+
+The region × category heatmap shows especially strong results for:
+
+* **Home products in EAST**
+* **Electronics in EAST**
+
+Product-level insights reveal that several office and electronics products consistently dominate revenue rankings.
+
+### **Dashboard Screenshots**
+
+![Dashboard](<docs/images/PowerBi Dashboard.png>)
+
+## **6. Suggested Business Action**
+
+The business should reinforce its presence in the **EAST region**, where all categories are performing well. Marketing, inventory focus, and targeted campaigns will likely generate the highest returns there.
+
+Additionally, expanding and promoting top-performing **home** and **electronics** products can strengthen profitability overall. Lower-performing regions may need adjustments in pricing, promotion, or distribution strategies.
+
+---
+
+## **7. Challenges**
+
+A key challenge was ensuring the ODBC connection correctly preserved data types and relationships. Another challenge was crafting clean and accurate DAX measures and designing a dashboard layout that balanced clarity and depth without overwhelming the user.
+
+---
+
+## **8. Ethical Considerations**
+
+Data must be interpreted responsibly. Some fields contain missing or incomplete values, meaning conclusions should not be overgeneralized. BI insights should guide—not dictate—decisions, as revenue differences can be driven by factors that the data does not include (e.g., population density, operational constraints).
+
+It is also important to avoid unintentionally reinforcing biases, such as labeling regions underperforming without considering contextual reasons. Transparency and fairness must remain priorities when using analytics for real business decisions.
+
+---
